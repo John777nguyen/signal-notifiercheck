@@ -1,8 +1,11 @@
 name: Monitor BBMA Signal Channel
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    # Chạy mỗi 5 phút (GitHub Actions không đảm bảo chính xác tuyệt đối,
+    # Chạy mỗi 10 phút (GitHub Actions không đảm bảo chính xác tuyệt đối,
     # có thể trễ vài phút vào giờ cao điểm)
     - cron: "*/10 * * * *"
   workflow_dispatch: {}  # cho phép bấm nút "Run workflow" thủ công để test
