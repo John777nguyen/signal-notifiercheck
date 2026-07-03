@@ -71,11 +71,18 @@ def save_last_seen_id(msg_id):
         json.dump({"last_id": msg_id}, f)
 
 
+def clean_message_text(text):
+    """Xóa dòng 'MD_BBMA Multi Time Frame' khỏi nội dung tin nhắn gốc."""
+    lines = text.split("\n")
+    lines = [line for line in lines if line.strip() != "MD_BBMA Multi Time Frame"]
+    return "\n".join(lines).strip()
+
+
 def send_telegram_notification(text):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": CHAT_ID,
-        "text": f"{CHANNEL_USERNAME}:\n\n{text}",
+        "text": clean_message_text(text),
     }
     r = requests.post(url, data=payload, timeout=15)
     r.raise_for_status()
